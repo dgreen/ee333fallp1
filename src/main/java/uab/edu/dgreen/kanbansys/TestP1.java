@@ -1,22 +1,20 @@
 /*
- * Author: David Green DGreen@uab.edu // replace
+ * Author: David Green <DGreen@uab.edu>
  * Assignment:  ee333fallp1 - EE333 Fall 2021
  *
  * Credits:  (if any for sections of code)
  */
-package uab.edu.ee333.ee333fallp1;
+package uab.edu.dgreen.kanbansys;
 
 /**
  * Test P1 Driver
- *
- * @author David Green DGreen@uab.edu // replace
  */
 public class TestP1 {
 
   /** @param args the command line arguments */
   public static void main(String[] args) {
 
-		System.out.println(
+		System.out.println(    // TODO: change name
 				"""
 				Test Program for P1 by David Green
         EE333 Fall 2021
@@ -83,7 +81,7 @@ public class TestP1 {
 				continue;
 			kc.abandon(null);
 			if (! kc.isAbandoned()) {
-				System.out.println("Failed to abandon from state: " + ksStart.toString());
+				System.out.println("Failed to abandon from state: " + ksStart);
 			}
 		}
   }

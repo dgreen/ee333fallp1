@@ -1,12 +1,12 @@
 /*
- * Author: David Green DGreen@uab.edu  // replace
+ * Author: David Green <DGreen@uab.edu>  // replace
  * Assignment:  ee333fallp1 - EE333 Fall 2021
  *
  * Credits:  (if any for sections of code)
  */
-package uab.edu.ee333.ee333fallp1;
+package uab.edu.dgreen.kanbansys;
 
-/** @author David Green DGreen@uab.edu */
+/** Model a Kanban Card */
 public class KanbanCard {
 
   /**
