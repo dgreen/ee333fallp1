@@ -94,7 +94,7 @@ public class KanbanCard {
    * Mark the task as in design if it is in the backlog (no action otherwise) and capture note if
    * non-null
    *
-   * @param note a String note or null, if non-null, a newline will be appended to the string
+   * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
   public void start(String note) {}
 
@@ -102,35 +102,35 @@ public class KanbanCard {
    * Mark the task as in build if it was in design (no action otherwise) and capture note if
    * non-null
    *
-   * @param note a String note or null, if non-null, a newline will be appended to the string
+   * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
   public void build(String note) {}
 
   /**
    * Mark the task as in test if it was in build (no action otherwise) and capture note
    *
-   * @param note a String note or null, if non-null, a newline will be appended to the string
+   * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
   public void test(String note) {}
 
   /**
    * Mark the task as ready to release if it was in test (no action otherwise) and capture note
    *
-   * @param note a String note or null, if non-null, a newline will be appended to the string
+   * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
   public void release(String note) {}
 
   /**
    * Mark the task as complete if it was in release (no action otherwise) and capture note
    *
-   * @param note a String note or null, if non-null, a newline will be appended to the string
+   * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
   public void complete(String note) {}
 
   /**
    * Mark the task as abandoned unless it was completed (no action otherwise) and capture note
    *
-   * @param note a String note or null, if non-null, a newline will be appended to the string
+   * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
   public void abandon(String note) {}
 
@@ -138,7 +138,7 @@ public class KanbanCard {
    * Modify the state of the task and capture the note
    *
    * @param state the new KCardState for the task
-   * @param note a String note or null, if non-null, a newline will be appended to the string
+   * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
   public void move(KCardState state, String note) {}
 }
