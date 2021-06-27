@@ -6,8 +6,11 @@
  */
 package uab.edu.dgreen.kanbansys;
 
-/** Fake calendar */
+/** Fake calendar (Static data, methods only */
 public class Calendar {
+
+  private static String theDate = "15 August 2021";
+
   Calendar() {}
 
   /**
@@ -15,14 +18,18 @@ public class Calendar {
    *
    * @param date representation of data as String
    */
-  public void setDate(String date) {}
+  public static void setDate(String date) {
+    if (date != null) {
+      theDate = date;
+    }
+  }
 
   /**
    * Provide the fake calendar date
    *
    * @return String representation of date from calendar
    */
-  public String getDate() {
-    return "";
+  public static String getDate() {
+    return theDate;
   }
 }
