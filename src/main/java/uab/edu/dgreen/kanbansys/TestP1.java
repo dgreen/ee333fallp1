@@ -80,13 +80,17 @@ public class TestP1 {
 		for (var ksStart : KCardState.values()) {
 			if (ksStart == KCardState.DONE)
 				continue;
+			System.out.println(".Trying to abandon " + ksStart);
+			kc.move(ksStart, null);
 			kc.abandon(null);
 			if (! kc.isAbandoned()) {
-				System.out.println("Failed to abandon from state: " + ksStart);
+				System.out.println("...Failed to abandon from state: " + ksStart);
 				abandonedFailed = true;
+			} else {
+				System.out.println("...Success");
 			}
 		}
-		System.out.println((abandonedFailed) ? "Failed test." : "Passed test.");
+		System.out.println("Test Complete.");
   }
 
 	// return true if change is the normal next state from state now or if abandoning
