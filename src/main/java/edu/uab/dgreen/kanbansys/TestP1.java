@@ -57,7 +57,7 @@ public class TestP1 {
     kc = new KanbanCard("another card");
 
     for (var start : stateList) {
-      kc.move(start, null);
+      kc.move(start, "");
       for (var check : stateList) {
         if (!nextOrAbandon(start, check)) {
           changeTo(kc, check);
@@ -78,8 +78,8 @@ public class TestP1 {
     for (var start : stateList) {
       if (start.equals("DONE")) continue;
       System.out.println(".Trying to abandon " + start);
-      kc.move(start, null);
-      kc.abandon(null);
+      kc.move(start, "");
+      kc.abandon("");
       if (!kc.isAbandoned()) {
         System.out.println("...Failed to abandon from state: " + start);
       } else {
@@ -91,9 +91,9 @@ public class TestP1 {
 
   // Returns true if change is the normal next state from state now or if abandoning
   private static boolean nextOrAbandon(String now, String change) {
-    if (change.equals("ABANDONED")) return true;
 
     boolean result;
+
     switch (now) {
       case "BACKLOG":
         result = change.equals("DESIGN");
@@ -110,6 +110,9 @@ public class TestP1 {
       case "RELEASE":
         result = change.equals("DONE");
         break;
+      case "ABANDONED":
+        result = true;
+        break;
       default:
         result = false;
         break;
@@ -119,9 +122,6 @@ public class TestP1 {
 
   // Uses a non-Move method to change the state if one exists
   private static void changeTo(KanbanCard kc, String newState) {
-
-    // No method to check to move to backlog
-    if (newState.equals("BACKLOG")) return;
 
     switch (newState) {
       case "DESIGN":
@@ -139,7 +139,7 @@ public class TestP1 {
       case "DONE":
         kc.complete("completed");
         break;
-      default:
+      default: // includes "BACKLOG"
         break;
     }
   }
