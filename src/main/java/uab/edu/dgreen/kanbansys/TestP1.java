@@ -84,7 +84,6 @@ public class TestP1 {
       kc.abandon(null);
       if (! kc.isAbandoned()) {
         System.out.println("...Failed to abandon from state: " + ksStart);
-        abandonedFailed = true;
       } else {
         System.out.println("...Success");
       }
