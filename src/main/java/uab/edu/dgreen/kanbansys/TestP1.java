@@ -75,6 +75,7 @@ public class TestP1 {
 
     *** Test for failure to abandon task ***
     """);
+		var abandonedFailed = false;
 		kc = new KanbanCard("yet another card");
 		for (var ksStart : KCardState.values()) {
 			if (ksStart == KCardState.DONE)
@@ -82,8 +83,10 @@ public class TestP1 {
 			kc.abandon(null);
 			if (! kc.isAbandoned()) {
 				System.out.println("Failed to abandon from state: " + ksStart);
+				abandonedFailed = true;
 			}
 		}
+		System.out.println((abandonedFailed) ? "Failed test." : "Passed test.");
   }
 
 	// return true if change is the normal next state from state now or if abandoning

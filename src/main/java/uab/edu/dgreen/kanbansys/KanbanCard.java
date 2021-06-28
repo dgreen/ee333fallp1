@@ -10,7 +10,7 @@ package uab.edu.dgreen.kanbansys;
 public class KanbanCard {
 
   /**
-   * Create a Kanban card with a unique uid and name
+   * Create a Kanban card with a unique uid, and Initialize other fields appropriately
    *
    * @param name the name of the card
    */
@@ -46,7 +46,7 @@ public class KanbanCard {
   /**
    * Is this task active?
    *
-   * @return true if not done or not abandoned
+   * @return true if not in backlog, not done or not abandoned
    */
   public boolean isActive() {
     return false;
@@ -68,8 +68,7 @@ public class KanbanCard {
    *
    * <p><code>
    * uid: Name of task Task State
-   * Begin: date (or tbd)
-   * Completed: date (or TBD)
+   * state - Create: date (or tbd) Begin: date (or tbd) Completed: date (or TBD)
    * (notes would go here if any)
    * </code>
    *
@@ -77,7 +76,7 @@ public class KanbanCard {
    *
    * <p><code>
    * 100000000: Demo task Backlog
-   * Begin: TBD Completed: TBD
+   * BACKLOG - Create: 20210815 Begin: TBD Completed: TBD
    * </code>
    *
    * @return formatted string
@@ -99,8 +98,8 @@ public class KanbanCard {
   public void start(String note) {}
 
   /**
-   * Mark the task as in build if it was in design (no action otherwise) and capture note if
-   * non-null
+   * Mark and timestamp (if beginDate null) the task as in build if it was in design (no action
+   * otherwise) and capture note if non-null
    *
    * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
@@ -121,7 +120,8 @@ public class KanbanCard {
   public void release(String note) {}
 
   /**
-   * Mark the task as complete if it was in release (no action otherwise) and capture note
+   * Mark and timestamp the task as complete if it was in release (no action otherwise) and capture
+   * note
    *
    * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
@@ -135,7 +135,8 @@ public class KanbanCard {
   public void abandon(String note) {}
 
   /**
-   * Modify the state of the task and capture the note
+   * Modify the state of the task and capture the note, update the date fields based on present new
+   * state
    *
    * @param state the new KCardState for the task
    * @param note a String note or null, if non-null, a newline will be prepended to the added note
