@@ -21,7 +21,7 @@ public class KanbanCard {
    *
    * @return long number corresponding to uid of card
    */
-  public long getUID() {
+  public long getUid() {
     return 0;
   }
 
