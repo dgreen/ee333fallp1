@@ -6,7 +6,7 @@
  */
 package uab.edu.dgreen.kanbansys;
 
-/** Fake calendar (Static data, methods only */
+/** Fake calendar (Static data, static methods only */
 public class Calendar {
 
   private static String theDate = "20210815";
@@ -14,7 +14,7 @@ public class Calendar {
   Calendar() {}
 
   /**
-   * Set the calendar to specified date
+   * Sets the calendar to specified date
    *
    * @param date representation of data as String
    */
@@ -25,7 +25,7 @@ public class Calendar {
   }
 
   /**
-   * Provide the fake calendar date
+   * Provides the fake calendar date
    *
    * @return String representation of date from calendar
    */

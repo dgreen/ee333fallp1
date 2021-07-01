@@ -11,7 +11,11 @@ public class TestP1 {
 
   private static int date = 20210801; // Note: it will be changed on every print
 
-  /** @param args the command line arguments */
+  /**
+   * Program to test the KanbanCard implementation
+   *
+   * @param args the command line arguments (unused)
+   */
   public static void main(String[] args) {
 
     Calendar.setDate("" + date);
@@ -83,7 +87,7 @@ public class TestP1 {
     System.out.println("Test Complete.");
   }
 
-  // return true if change is the normal next state from state now or if abandoning
+  // Returns true if change is the normal next state from state now or if abandoning
   private static boolean nextOrAbandon(KCardState now, KCardState change) {
     if (change == KCardState.ABANDONED) return true;
 
@@ -112,6 +116,7 @@ public class TestP1 {
     return result;
   }
 
+  // Uses a non-Move method to change the state if one exists
   private static void changeTo(KanbanCard kc, KCardState newState) {
 
     // No method to check to move to backlog
@@ -138,6 +143,7 @@ public class TestP1 {
     }
   }
 
+  // Prints supplied info and KanbanCard details
   private static void p(String info, KanbanCard kcp) {
     System.out.println("");
     System.out.println("vvv " + info + " vvv");

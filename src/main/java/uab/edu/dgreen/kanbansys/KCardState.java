@@ -6,7 +6,7 @@
  */
 package uab.edu.dgreen.kanbansys;
 
-/** The states of a Kanban Card */
+/** States of a Kanban Card */
 public enum KCardState {
 
   /** The task is in the backlog */
