@@ -16,19 +16,16 @@ public class TestP1 {
 
     Calendar.setDate("" + date);
 
-    System.out.println( // TODO: change name
-        """
-        Test Program for P1 by David Green
-        EE333 Fall 2021
-    """);
+    System.out.println("Test Program for P1 by David Green"); // TODO: change name
+    System.out.println("EE333 Fall 2021");
+    System.out.println("");
 
     // Happy path
 
-    System.out.println("""
-        *** Test Happy Path ***
-        """);
+    System.out.println("*** Test Happy Path ***");
+    System.out.println("");
 
-    var kc = new KanbanCard("Task with a description");
+    KanbanCard kc = new KanbanCard("Task with a description");
     p("new card:", kc);
     kc.start("Start working on this task");
     p("in design", kc);
@@ -47,11 +44,9 @@ public class TestP1 {
     // for each starting state
     //   try changing to all states but 1) next, abandoned
 
-    System.out.println(
-        """
-
-    *** Test for failure to silently fail invalid change requests ***
-    """);
+    System.out.println("");
+    System.out.println("*** Test for failure to silently fail invalid change requests ***");
+    System.out.println("");
 
     kc = new KanbanCard("another card");
 
@@ -69,10 +64,10 @@ public class TestP1 {
     // for each state except DONE see if you can abandon
     //    final state should be abandoned
 
-    System.out.println("""
+    System.out.println("");
+    System.out.println("*** Test for failure to abandon task ***");
+    System.out.println("");
 
-    *** Test for failure to abandon task ***
-    """);
     kc = new KanbanCard("yet another card");
     for (var ksStart : KCardState.values()) {
       if (ksStart == KCardState.DONE) continue;
@@ -92,15 +87,28 @@ public class TestP1 {
   private static boolean nextOrAbandon(KCardState now, KCardState change) {
     if (change == KCardState.ABANDONED) return true;
 
-    boolean result =
-        switch (now) {
-          case BACKLOG -> change == KCardState.DESIGN;
-          case DESIGN -> change == KCardState.BUILD;
-          case BUILD -> change == KCardState.TEST;
-          case TEST -> change == KCardState.RELEASE;
-          case RELEASE -> change == KCardState.DONE;
-          default -> false;
-        };
+    boolean result;
+    switch (now) {
+      case BACKLOG:
+        result = change == KCardState.DESIGN;
+        break;
+      case DESIGN:
+        result = change == KCardState.BUILD;
+        break;
+      case BUILD:
+        result = change == KCardState.TEST;
+        break;
+      case TEST:
+        result = change == KCardState.RELEASE;
+        break;
+      case RELEASE:
+        result = change == KCardState.DONE;
+        break;
+      default:
+        result = false;
+        break;
+    }
+    ;
     return result;
   }
 
@@ -110,13 +118,23 @@ public class TestP1 {
     if (newState == KCardState.BACKLOG) return;
 
     switch (newState) {
-      case DESIGN -> kc.start("started");
-      case BUILD -> kc.build("building");
-      case TEST -> kc.test("testing");
-      case RELEASE -> kc.release("releasing");
-      case DONE -> kc.complete("completed");
-      default -> {
-      }
+      case DESIGN:
+        kc.start("started");
+        break;
+      case BUILD:
+        kc.build("building");
+        break;
+      case TEST:
+        kc.test("testing");
+        break;
+      case RELEASE:
+        kc.release("releasing");
+        break;
+      case DONE:
+        kc.complete("completed");
+        break;
+      default:
+        break;
     }
   }
 
