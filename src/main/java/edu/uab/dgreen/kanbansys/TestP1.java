@@ -1,8 +1,10 @@
 /*
  * Author: David Green <DGreen@uab.edu>
  * Assignment:  ee333fallp1 - EE333 Fall 2021
+ *
+ * Credits:  (if any for sections of code)
  */
-package edu.uab.dgreen;
+package edu.uab.dgreen.kanbansys;
 
 /** Test P1 Driver */
 public class TestP1 {
@@ -90,30 +92,54 @@ public class TestP1 {
     if (change == KCardState.ABANDONED) return true;
 
     boolean result;
-		result = switch (now) {
-			case BACKLOG -> change == KCardState.DESIGN;
-			case DESIGN -> change == KCardState.BUILD;
-			case BUILD -> change == KCardState.TEST;
-			case TEST -> change == KCardState.RELEASE;
-			case RELEASE -> change == KCardState.DONE;
-			default -> false;
-		};
+    switch (now) {
+      case BACKLOG:
+        result = change == KCardState.DESIGN;
+        break;
+      case DESIGN:
+        result = change == KCardState.BUILD;
+        break;
+      case BUILD:
+        result = change == KCardState.TEST;
+        break;
+      case TEST:
+        result = change == KCardState.RELEASE;
+        break;
+      case RELEASE:
+        result = change == KCardState.DONE;
+        break;
+      default:
+        result = false;
+        break;
+    }
+    ;
     return result;
   }
 
   // Uses a non-Move method to change the state if one exists
-	//   Don't move if BACKLOG or unknown new state
   private static void changeTo(KanbanCard kc, KCardState newState) {
 
+    // No method to check to move to backlog
+    if (newState == KCardState.BACKLOG) return;
+
     switch (newState) {
-			case BACKLOG -> {}
-      case DESIGN -> kc.start("started");
-      case BUILD -> kc.build("building");
-      case TEST -> kc.test("testing");
-      case RELEASE -> kc.release("releasing");
-      case DONE -> kc.complete("completed");
-      default -> {
-			}
+      case DESIGN:
+        kc.start("started");
+        break;
+      case BUILD:
+        kc.build("building");
+        break;
+      case TEST:
+        kc.test("testing");
+        break;
+      case RELEASE:
+        kc.release("releasing");
+        break;
+      case DONE:
+        kc.complete("completed");
+        break;
+      default:
+        break;
     }
   }
 

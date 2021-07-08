@@ -4,7 +4,7 @@
  *
  * Credits:  (if any for sections of code)
  */
-package edu.uab.dgreen;
+package edu.uab.dgreen.kanbansys;
 
 /** Model a Kanban Card */
 public class KanbanCard {

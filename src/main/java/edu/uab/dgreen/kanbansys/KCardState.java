@@ -4,7 +4,7 @@
  *
  * Credits:  ideas from https://howtodoinjava.com/java/enum/java-enum-string-example/
  */
-package edu.uab.dgreen;
+package edu.uab.dgreen.kanbansys;
 
 /** States of a Kanban Card */
 public enum KCardState {
