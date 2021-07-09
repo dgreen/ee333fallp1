@@ -1,4 +1,4 @@
-# ee333fallp1
+# kanbansys
 
 EE333 Fall 2021 P1 (through P3)
 
