@@ -21,8 +21,8 @@ public class KanbanCard {
    *
    * @return long number corresponding to uid of card
    */
-  public long getUid() {
-    return 0;
+  public String getUid() {
+    return "";
   }
 
   /**
@@ -141,5 +141,5 @@ public class KanbanCard {
    * @param state the new KCardState for the task
    * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
-  public void move(KCardState state, String note) {}
+  public void move(String state, String note) {}
 }

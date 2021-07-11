@@ -9,7 +9,7 @@ package edu.uab.dgreen.kanbansys;
 /** Fake calendar (Static data, static methods only */
 public class Calendar {
 
-  private static String theDate = "20210815";
+  private static String theDate = "TBD";
 
   Calendar() {}
 

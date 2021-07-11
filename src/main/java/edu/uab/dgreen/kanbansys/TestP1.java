@@ -18,6 +18,8 @@ public class TestP1 {
    */
   public static void main(String[] args) {
 
+    String[] stateList = {"BACKLOG", "DESIGN", "BUILD", "TEST", "RELEASE", "DONE", "ABANDONED"};
+
     Calendar.setDate("" + date);
 
     System.out.println("Test Program for P1 by David Green"); // TODO: change name
@@ -54,11 +56,11 @@ public class TestP1 {
 
     kc = new KanbanCard("another card");
 
-    for (var ksStart : KCardState.values()) {
-      kc.move(ksStart, null);
-      for (var ksCheck : KCardState.values()) {
-        if (!nextOrAbandon(ksStart, ksCheck)) {
-          changeTo(kc, ksCheck);
+    for (var start : stateList) {
+      kc.move(start, null);
+      for (var check : stateList) {
+        if (!nextOrAbandon(start, check)) {
+          changeTo(kc, check);
         }
       }
     }
@@ -73,13 +75,13 @@ public class TestP1 {
     System.out.println("");
 
     kc = new KanbanCard("yet another card");
-    for (var ksStart : KCardState.values()) {
-      if (ksStart == KCardState.DONE) continue;
-      System.out.println(".Trying to abandon " + ksStart);
-      kc.move(ksStart, null);
+    for (var start : stateList) {
+      if (start.equals("DONE")) continue;
+      System.out.println(".Trying to abandon " + start);
+      kc.move(start, null);
       kc.abandon(null);
       if (!kc.isAbandoned()) {
-        System.out.println("...Failed to abandon from state: " + ksStart);
+        System.out.println("...Failed to abandon from state: " + start);
       } else {
         System.out.println("...Success");
       }
@@ -88,54 +90,53 @@ public class TestP1 {
   }
 
   // Returns true if change is the normal next state from state now or if abandoning
-  private static boolean nextOrAbandon(KCardState now, KCardState change) {
-    if (change == KCardState.ABANDONED) return true;
+  private static boolean nextOrAbandon(String now, String change) {
+    if (change.equals("ABANDONED")) return true;
 
     boolean result;
     switch (now) {
-      case BACKLOG:
-        result = change == KCardState.DESIGN;
+      case "BACKLOG":
+        result = change.equals("DESIGN");
         break;
-      case DESIGN:
-        result = change == KCardState.BUILD;
+      case "DESIGN":
+        result = change.equals("BUILD");
         break;
-      case BUILD:
-        result = change == KCardState.TEST;
+      case "BUILD":
+        result = change.equals("TEST");
         break;
-      case TEST:
-        result = change == KCardState.RELEASE;
+      case "TEST":
+        result = change.equals("RELEASE");
         break;
-      case RELEASE:
-        result = change == KCardState.DONE;
+      case "RELEASE":
+        result = change.equals("DONE");
         break;
       default:
         result = false;
         break;
     }
-    ;
     return result;
   }
 
   // Uses a non-Move method to change the state if one exists
-  private static void changeTo(KanbanCard kc, KCardState newState) {
+  private static void changeTo(KanbanCard kc, String newState) {
 
     // No method to check to move to backlog
-    if (newState == KCardState.BACKLOG) return;
+    if (newState.equals("BACKLOG")) return;
 
     switch (newState) {
-      case DESIGN:
+      case "DESIGN":
         kc.start("started");
         break;
-      case BUILD:
+      case "BUILD":
         kc.build("building");
         break;
-      case TEST:
+      case "TEST":
         kc.test("testing");
         break;
-      case RELEASE:
+      case "RELEASE":
         kc.release("releasing");
         break;
-      case DONE:
+      case "DONE":
         kc.complete("completed");
         break;
       default:
