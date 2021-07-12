@@ -96,6 +96,7 @@ public class TestP2 {
         Try kanban card with 6 extra fields
         -----------------------------------
         """);
+
     KanbanCard kc = new KanbanCard("test card with more fields");
     kc.start("start this test card");
     kc.add(f1);
@@ -111,6 +112,17 @@ public class TestP2 {
     String fieldNames[] = kc.getFields();
     for (String fieldName : fieldNames) {
       System.out.println("..." + fieldName);
+    }
+
+    System.out.println(
+        """
+
+        Look at the type of fields for f1 through f6
+        --------------------------------------------
+        """);
+
+    for (var f : array) {
+      System.out.println(f.getType());
     }
   }
 
