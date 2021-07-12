@@ -118,7 +118,7 @@ public class KanbanCard {
         + beginDate
         + " Completed: "
         + endDate
-        + (notes.equals("") ? "" : (System.lineSeparator() + notes));
+        + (notes.equals("") ? "" : ((System.lineSeparator() + notes)));
   }
 
   /** @param newName the new task name */
@@ -228,7 +228,7 @@ public class KanbanCard {
   // Append note to notes after a line separator if there is a note.
   private void append(String note) {
     if (!note.equals("")) {
-      if (notes == null) {
+      if ((notes == null) || notes.equals("")) {
         notes = note;
       } else {
         notes += System.lineSeparator() + note;
