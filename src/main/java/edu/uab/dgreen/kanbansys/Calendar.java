@@ -29,7 +29,7 @@ public class Calendar {
    *
    * @return String representation of date from calendar
    */
-  public static String getDate() {
-    return theDate;
+  public static KanbanDate getDate() {
+    return new KanbanDate(theDate);
   }
 }
