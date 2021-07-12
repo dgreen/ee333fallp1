@@ -108,7 +108,7 @@ public class KanbanCard {
   public String toString() {
     return ""
         + uid
-        + " "
+        + ": "
         + name
         + System.lineSeparator()
         + state
