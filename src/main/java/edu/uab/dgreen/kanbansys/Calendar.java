@@ -27,7 +27,7 @@ public class Calendar {
   /**
    * Provides the fake calendar date
    *
-   * @return String representation of date from calendar
+   * @return KanbanDate representation of date from calendar
    */
   public static KanbanDate getDate() {
     return new KanbanDate(theDate);

@@ -145,7 +145,7 @@ public class KanbanCard {
 
     return ""
         + fields[UID]
-        + " "
+        + ": "
         + fields[NAME]
         + System.lineSeparator()
         + fields[STATE]
@@ -255,12 +255,22 @@ public class KanbanCard {
     }
   }
 
+  /**
+   * Adds a field to the Kanban card
+   *
+   * @param f field to add
+   */
   public void add(Field f) {
     if (nFields < MAXFIELDS) {
       fields[nFields++] = f;
     }
   }
 
+  /**
+   * Returns an array containing the fields of this Kanban Card
+   *
+   * @return array of fields
+   */
   public final String[] getFields() {
     String[] fieldNames = new String[nFields];
     for (int i = 0; i < nFields; i++) {

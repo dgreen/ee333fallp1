@@ -11,6 +11,12 @@ public class StringField extends Field {
 
   private String text; // contents of field
 
+  /**
+   * A Field that holds Strings
+   *
+   * @param name of field
+   * @param text value of field
+   */
   public StringField(String name, String text) {
     super(name, "string");
     this.text = (text == null) ? "unknown" : text;
@@ -39,6 +45,12 @@ public class StringField extends Field {
     return text.compareTo(((StringField) f).text);
   }
 
+  /**
+   * Create a new Field with the same name but new value
+   *
+   * @param newValue new value of the StringField
+   * @return the new StringField
+   */
   @Override
   public Field newField(Object newValue) {
     return new StringField(this.getName(), (String) newValue);
