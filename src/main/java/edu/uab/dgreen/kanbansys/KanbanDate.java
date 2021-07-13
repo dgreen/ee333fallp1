@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class KanbanDate implements Comparable<KanbanDate> {
 
-  private String date;
+  private final String date;
 
   /**
    * Construct a date object with date of "TBD"
@@ -90,7 +90,7 @@ public class KanbanDate implements Comparable<KanbanDate> {
    */
   @Override
   public int compareTo(KanbanDate d) {
-    if ((d == null) && d.toString().equals("TBD")) {
+    if ((d == null) || d.toString().equals("TBD")) {
       return -1;
     }
     if (this.date.equals("TBD")) {

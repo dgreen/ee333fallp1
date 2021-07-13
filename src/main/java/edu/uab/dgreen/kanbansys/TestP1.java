@@ -92,55 +92,28 @@ public class TestP1 {
   // Returns true if change is the normal next state from state now or if abandoning
   private static boolean nextOrAbandon(String now, String change) {
 
-    boolean result;
-
-    switch (now) {
-      case "BACKLOG":
-        result = change.equals("DESIGN");
-        break;
-      case "DESIGN":
-        result = change.equals("BUILD");
-        break;
-      case "BUILD":
-        result = change.equals("TEST");
-        break;
-      case "TEST":
-        result = change.equals("RELEASE");
-        break;
-      case "RELEASE":
-        result = change.equals("DONE");
-        break;
-      case "ABANDONED":
-        result = true;
-        break;
-      default:
-        result = false;
-        break;
-    }
-    return result;
+    return switch (now) {
+      case "BACKLOG" -> change.equals("DESIGN");
+      case "DESIGN" -> change.equals("BUILD");
+      case "BUILD" -> change.equals("TEST");
+      case "TEST" -> change.equals("RELEASE");
+      case "RELEASE" -> change.equals("DONE");
+      case "ABANDONED" -> true;
+      default -> false;
+    };
   }
 
   // Uses a non-Move method to change the state if one exists
   private static void changeTo(KanbanCard kc, String newState) {
 
     switch (newState) {
-      case "DESIGN":
-        kc.start("started");
-        break;
-      case "BUILD":
-        kc.build("building");
-        break;
-      case "TEST":
-        kc.test("testing");
-        break;
-      case "RELEASE":
-        kc.release("releasing");
-        break;
-      case "DONE":
-        kc.complete("completed");
-        break;
-      default: // includes "BACKLOG"
-        break;
+      case "DESIGN" -> kc.start("started");
+      case "BUILD" -> kc.build("building");
+      case "TEST" -> kc.test("testing");
+      case "RELEASE" -> kc.release("releasing");
+      case "DONE" -> kc.complete("completed");
+      default -> { // includes "BACKLOG"
+      }
     }
   }
 

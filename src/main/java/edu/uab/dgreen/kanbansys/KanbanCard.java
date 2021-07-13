@@ -24,7 +24,7 @@ package edu.uab.dgreen.kanbansys;
  */
 public class KanbanCard {
 
-  private Field[] fields;
+  private final Field[] fields;
   private int nFields;
 
   private static long count = 1000000000; // start with 10 digits
@@ -256,6 +256,34 @@ public class KanbanCard {
   }
 
   /**
+   * Get a field by name
+   *
+   * @param name name of the field to find
+   * @return field if found, null otherwise
+   */
+  public final Field getField(String name) {
+    for (int i = 0; i < nFields; i++) {
+      if (fields[i].getName().equals(name)) {
+        return fields[i];
+      }
+    }
+    return null; // did not find field
+  }
+
+  /**
+   * Returns an array containing the fields of this Kanban Card
+   *
+   * @return array of fields
+   */
+  public final String[] getFieldNames() {
+    String[] fieldNames = new String[nFields];
+    for (int i = 0; i < nFields; i++) {
+      fieldNames[i] = fields[i].getName();
+    }
+    return fieldNames;
+  }
+
+  /**
    * Adds a field to the Kanban card
    *
    * @param f field to add
@@ -267,19 +295,24 @@ public class KanbanCard {
   }
 
   /**
-   * Returns an array containing the fields of this Kanban Card
+   * Set field to a new field with a possibly new value
    *
-   * @return array of fields
+   * @param field the new field
    */
-  public final String[] getFields() {
-    String[] fieldNames = new String[nFields];
+  public void set(Field newField) {
+    var name = newField.getName();
+
     for (int i = 0; i < nFields; i++) {
-      fieldNames[i] = fields[i].getName();
+      if (fields[i].getName().equals(name)) {
+        fields[i] = newField;
+        return;
+      }
     }
-    return fieldNames;
+    // TBD: if here, did not find the field, no action
   }
 
-  // Helper method:
+  // Helper methods:
+
   // if present state meets requirement of being before state,
   //    then change to after state and update note
   private void nextStateIfValid(String before, String after, String note) {

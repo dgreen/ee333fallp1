@@ -109,7 +109,7 @@ public class TestP2 {
     System.out.println(kc);
 
     System.out.println("The field names are:");
-    String fieldNames[] = kc.getFields();
+    String fieldNames[] = kc.getFieldNames();
     for (String fieldName : fieldNames) {
       System.out.println("..." + fieldName);
     }
@@ -124,6 +124,34 @@ public class TestP2 {
     for (var f : array) {
       System.out.println(f.getType());
     }
+
+    System.out.println(
+        """
+
+        Test getting fields by name
+        ---------------------------
+        """);
+
+    for (var f : array2) {
+      var foundField = kc.getField(f.getName());
+      testTrue((f == foundField), "testing for " + f.getName());
+    }
+
+    testTrue(kc.getField("not findable") == null, "Should not find the unfindable");
+
+    System.out.println(
+        """
+
+        Test setting fields by name
+        ---------------------------
+        """);
+
+    Field originalField = kc.getField("fieldName5");
+    System.out.println("original field: " + originalField.getTaggedString());
+    Field newField = originalField.newField("RUNNING");
+    System.out.println("changed field with RUNNING value: " + newField.getTaggedString());
+    kc.set(newField);
+    System.out.println("changed field from card: " + kc.getField("fieldName5").getTaggedString());
   }
 
   private static void sortPrintArray(Field[] array) {
