@@ -13,7 +13,7 @@ package edu.uab.dgreen.kanbansys;
  */
 public class DateField extends Field {
 
-  private KanbanDate kd;
+  private final KanbanDate kd;
 
   /**
    * Create a DateField
@@ -24,6 +24,15 @@ public class DateField extends Field {
   public DateField(String name, KanbanDate kd) {
     super(name, "date");
     this.kd = new KanbanDate(kd); // clone it
+  }
+
+  /**
+   * Returns the KanbanDate
+   *
+   * @return kanban date
+   */
+  public final KanbanDate get() {
+    return kd;
   }
 
   /**

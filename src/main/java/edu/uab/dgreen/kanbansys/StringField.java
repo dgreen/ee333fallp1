@@ -9,7 +9,7 @@ package edu.uab.dgreen.kanbansys;
 /** Describe a StringField which is a field that holds a string */
 public class StringField extends Field {
 
-  private String text; // contents of field
+  private final String text; // contents of field
 
   /**
    * A Field that holds Strings
@@ -20,6 +20,17 @@ public class StringField extends Field {
   public StringField(String name, String text) {
     super(name, "string");
     this.text = (text == null) ? "unknown" : text;
+  }
+
+  /**
+   * Returns a string representation of the field's value (given it is a string, the value is
+   * returned. (same as toString())
+   *
+   * @return the value of the field (text string)
+   */
+  @Override
+  public final String get() {
+    return text;
   }
 
   /**

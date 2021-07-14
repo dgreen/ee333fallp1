@@ -38,6 +38,9 @@ public class TestP2 {
     System.out.println("Compare f1 to f1: " + f1.compareTo(f1));
     System.out.println("Compare f2 to f1: " + f2.compareTo(f1));
 
+    String s = (String) f1.get();
+    testTrue(s.equals(f1.toString()), "try StringField's get");
+
     System.out.println(
         """
 
@@ -53,6 +56,9 @@ public class TestP2 {
     System.out.println("Compare f3 to f4: " + f3.compareTo(f4));
     System.out.println("Compare f3 to f3: " + f3.compareTo(f3));
     System.out.println("Compare f4 to f3: " + f4.compareTo(f3));
+
+    KanbanDate kd = (KanbanDate) f3.get();
+    testTrue(kd.toString().equals(f3.toString()), "try DateField's get");
 
     System.out.println(
         """
@@ -70,6 +76,9 @@ public class TestP2 {
     System.out.println("Compare f6 to f5: " + f6.compareTo(f5));
 
     f5 = f5.newField("BROKE");
+
+    String st = (String) f5.get();
+    testTrue(st.equals(f5.toString()), "try StateField's get");
 
     System.out.println(
         """

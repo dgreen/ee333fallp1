@@ -73,6 +73,13 @@ public abstract class Field implements Comparable<Field> {
   }
 
   /**
+   * Get the value of the field
+   *
+   * @return value
+   */
+  public abstract Object get();
+
+  /**
    * Implementation of the Comparable Interface for Fields.
    *
    * <p>Fields of the same type are compared on values. Fields of different types are compared based

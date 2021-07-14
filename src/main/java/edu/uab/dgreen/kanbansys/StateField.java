@@ -32,6 +32,16 @@ public class StateField extends Field {
   }
 
   /**
+   * Returns present state
+   *
+   * @return string state name
+   */
+  @Override
+  public final String get() {
+    return state;
+  }
+
+  /**
    * Provide a string representation of the state of the StateField
    *
    * @return the present state
