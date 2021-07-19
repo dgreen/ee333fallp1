@@ -27,7 +27,11 @@ public class KanbanCard {
    * @param name the name of the card
    */
   public KanbanCard(String name) {
-    this.name = name;
+    if ((name != null) && !name.equals("")) {
+      this.name = name;
+    } else {
+      this.name = "unnamed";
+    }
     uid = "" + ++count;
     createDate = Calendar.getDate();
     beginDate = "TBD";
@@ -134,7 +138,7 @@ public class KanbanCard {
    */
   public void start(String note) {
     nextStateIfValid("BACKLOG", "DESIGN", note);
-    if (beginDate.equals("TBD")) {
+    if (state.equals("DESIGN") && beginDate.equals("TBD")) {
       beginDate = Calendar.getDate();
     }
   }
