@@ -55,6 +55,10 @@ public class KanbanCard {
 
     fields = new Field[MAXFIELDS];
 
+    if (name == null || name.equals("")) {
+      name = "unnamed";
+    }
+
     // The standard fields
     fields[UID] = new StringField("uid", "" + ++count);
     fields[NAME] = new StringField("name", name);
@@ -174,7 +178,7 @@ public class KanbanCard {
    */
   public void start(String note) {
     nextStateIfValid("BACKLOG", "DESIGN", note);
-    if (fields[BEGIN].toString().equals("TBD")) {
+    if (fields[STATE].toString().equals("DESIGN") && fields[BEGIN].toString().equals("TBD")) {
       fields[BEGIN] = fields[BEGIN].newField(Calendar.getDate());
     }
   }
