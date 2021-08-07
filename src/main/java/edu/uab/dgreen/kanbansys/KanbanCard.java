@@ -6,6 +6,8 @@
  */
 package edu.uab.dgreen.kanbansys;
 
+import java.util.function.Predicate;
+
 /** Model a Kanban Card */
 public class KanbanCard {
 
@@ -38,6 +40,34 @@ public class KanbanCard {
     endDate = "TBD";
     notes = "";
     state = "BACKLOG";
+  }
+
+  public String getCreateDate() {
+    return createDate;
+  }
+
+  public String getBeginDate() {
+    return beginDate;
+  }
+
+  public String getEndDate() {
+    return endDate;
+  }
+
+  public String getNotes() {
+    return notes;
+  }
+
+  public String getState() {
+    return state;
+  }
+
+  public static long getCount() {
+    return count;
+  }
+
+  public static boolean matches(KanbanCard k, Predicate<KanbanCard> check) {
+    return check.test(k);
   }
 
   /**
