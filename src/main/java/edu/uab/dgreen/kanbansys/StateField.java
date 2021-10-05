@@ -81,7 +81,7 @@ public class StateField extends Field {
   // returning -1 if the supplied state is not in the list of states
   private int orderOf(String aState) {
     for (int i = 0; i < states.length; i++) {
-      if (state.equals(aState)) {
+      if (states[i].equals(aState)) {
         return i;
       }
     }
