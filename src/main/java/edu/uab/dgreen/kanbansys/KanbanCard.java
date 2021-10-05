@@ -6,6 +6,8 @@
  */
 package edu.uab.dgreen.kanbansys;
 
+import java.util.ArrayList;
+
 /**
  * Model a Kanban Card
  *
@@ -24,8 +26,7 @@ package edu.uab.dgreen.kanbansys;
  */
 public class KanbanCard {
 
-  private final Field[] fields;
-  private int nFields;
+  private final ArrayList<Field> fields;
 
   private static long count = 1000000000; // start with 10 digits
 
@@ -41,9 +42,6 @@ public class KanbanCard {
   // The number of standard fields
   private static final int NSTDFIELDS = 7;
 
-  // Maximum number of fields.
-  private static final int MAXFIELDS = 20;
-
   /**
    * Create a Kanban card with a unique uid, and Initialize other fields appropriately
    *
@@ -53,21 +51,21 @@ public class KanbanCard {
 
     String[] stateList = {"BACKLOG", "DESIGN", "BUILD", "TEST", "RELEASE", "DONE", "ABANDONED"};
 
-    fields = new Field[MAXFIELDS];
+    fields = new ArrayList<>();
 
     if (name == null || name.equals("")) {
       name = "unnamed";
     }
 
     // The standard fields
-    fields[UID] = new StringField("uid", "" + ++count);
-    fields[NAME] = new StringField("name", name);
-    fields[STATE] = new StateField("state", stateList, "BACKLOG");
-    fields[CREATE] = new DateField("createDate", Calendar.getDate());
-    fields[BEGIN] = new DateField("beginDate", new KanbanDate("TBD"));
-    fields[END] = new DateField("endDate", new KanbanDate("TBD"));
-    fields[NOTES] = new StringField("notes", "");
-    nFields = NSTDFIELDS;
+    // Code depends on preserving order of the standard fields
+    fields.add(new StringField("uid", "" + ++count));
+    fields.add(new StringField("name", name));
+    fields.add(new StateField("state", stateList, "BACKLOG"));
+    fields.add(new DateField("createDate", Calendar.getDate()));
+    fields.add(new DateField("beginDate", new KanbanDate("TBD")));
+    fields.add(new DateField("endDate", new KanbanDate("TBD")));
+    fields.add(new StringField("notes", ""));
   }
 
   /**
@@ -76,7 +74,7 @@ public class KanbanCard {
    * @return long number corresponding to uid of card
    */
   public String getUid() {
-    return (fields[UID]).toString();
+    return (fields.get(UID)).toString();
   }
 
   /**
@@ -85,7 +83,7 @@ public class KanbanCard {
    * @return String representing name of task
    */
   public String getName() {
-    return fields[NAME].toString();
+    return fields.get(NAME).toString();
   }
 
   /**
@@ -94,7 +92,7 @@ public class KanbanCard {
    * @return true if task has been completed
    */
   public boolean isDone() {
-    return fields[STATE].toString().equals("DONE");
+    return fields.get(STATE).toString().equals("DONE");
   }
 
   /**
@@ -103,7 +101,7 @@ public class KanbanCard {
    * @return true if not in backlog, not done or not abandoned
    */
   public boolean isActive() {
-    String state = fields[STATE].toString();
+    String state = fields.get(STATE).toString();
     return state.equals("DESIGN")
         || state.equals("BUILD")
         || state.equals("TEST")
@@ -116,7 +114,7 @@ public class KanbanCard {
    * @return true if task has been abandoned
    */
   public boolean isAbandoned() {
-    return fields[STATE].toString().equals("ABANDONED");
+    return fields.get(STATE).toString().equals("ABANDONED");
   }
 
   /**
@@ -143,31 +141,31 @@ public class KanbanCard {
   public String toString() {
     String otherFields = "";
 
-    for (int i = NSTDFIELDS; i < nFields; i++) {
-      otherFields += System.lineSeparator() + fields[i].toString();
+    for (int i = NSTDFIELDS; i < fields.size(); i++) {
+      otherFields += System.lineSeparator() + fields.get(i).toString();
     }
 
     return ""
-        + fields[UID]
+        + fields.get(UID)
         + ": "
-        + fields[NAME]
+        + fields.get(NAME)
         + System.lineSeparator()
-        + fields[STATE]
+        + fields.get(STATE)
         + " - Create: "
-        + fields[CREATE]
+        + fields.get(CREATE)
         + " Begin: "
-        + fields[BEGIN]
+        + fields.get(BEGIN)
         + " Completed: "
-        + fields[END]
-        + ((fields[NOTES].toString().equals(""))
+        + fields.get(END)
+        + ((fields.get(NOTES).toString().equals(""))
             ? ""
-            : (System.lineSeparator() + fields[NOTES].toString()))
+            : (System.lineSeparator() + fields.get(NOTES).toString()))
         + otherFields;
   }
 
   /** @param newName the new task name */
   public void updateName(String newName) {
-    fields[NAME] = fields[NAME].newField(newName);
+    changeField(NAME, newName);
   }
 
   /**
@@ -178,8 +176,9 @@ public class KanbanCard {
    */
   public void start(String note) {
     nextStateIfValid("BACKLOG", "DESIGN", note);
-    if (fields[STATE].toString().equals("DESIGN") && fields[BEGIN].toString().equals("TBD")) {
-      fields[BEGIN] = fields[BEGIN].newField(Calendar.getDate());
+    if (fields.get(STATE).toString().equals("DESIGN")
+        && fields.get(BEGIN).toString().equals("TBD")) {
+      changeField(BEGIN, Calendar.getDate());
     }
   }
 
@@ -219,8 +218,8 @@ public class KanbanCard {
    */
   public void complete(String note) {
     nextStateIfValid("RELEASE", "DONE", note);
-    if (fields[STATE].toString().equals("DONE")) {
-      fields[END] = fields[END].newField(Calendar.getDate());
+    if (fields.get(STATE).toString().equals("DONE")) {
+      changeField(END, Calendar.getDate());
     }
   }
 
@@ -230,11 +229,12 @@ public class KanbanCard {
    * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
   public void abandon(String note) {
-    if (!fields[STATE].toString().equals("DONE") && !fields[STATE].toString().equals("ABANDONED")) {
-      fields[STATE] = fields[STATE].newField("ABANDONED");
+    if (!fields.get(STATE).toString().equals("DONE")
+        && !fields.get(STATE).toString().equals("ABANDONED")) {
+      changeField(STATE, "ABANDONED");
       append(note);
-      if (fields[END].toString().equals("TBD")) {
-        fields[END] = fields[END].newField(Calendar.getDate());
+      if (fields.get(END).toString().equals("TBD")) {
+        changeField(END, Calendar.getDate());
       }
     }
   }
@@ -247,15 +247,17 @@ public class KanbanCard {
    * @param note a String note or null, if non-null, a newline will be prepended to the added note
    */
   public void move(String state, String note) {
-    fields[STATE] = fields[STATE].newField(state);
+    changeField(STATE, state);
     append(note);
-    if (!fields[STATE].toString().equals("BACkLOG") && fields[BEGIN].toString().equals("TBD")) {
-      fields[BEGIN] = new DateField("begin", Calendar.getDate());
+    if (!fields.get(STATE).toString().equals("BACkLOG")
+        && fields.get(BEGIN).toString().equals("TBD")) {
+      changeField(BEGIN, Calendar.getDate());
     }
-    if (fields[STATE].toString().equals("ABANDONED") || fields[STATE].toString().equals("DONE")) {
-      fields[END] = fields[END].newField(Calendar.getDate());
+    if (fields.get(STATE).toString().equals("ABANDONED")
+        || fields.get(STATE).toString().equals("DONE")) {
+      changeField(END, Calendar.getDate());
     } else {
-      fields[END] = fields[END].newField(new KanbanDate("TBD"));
+      changeField(END, new KanbanCard("TBD"));
     }
   }
 
@@ -266,9 +268,9 @@ public class KanbanCard {
    * @return field if found, null otherwise
    */
   public final Field getField(String name) {
-    for (int i = 0; i < nFields; i++) {
-      if (fields[i].getName().equals(name)) {
-        return fields[i];
+    for (int i = 0; i < fields.size(); i++) {
+      if (fields.get(i).getName().equals(name)) {
+        return fields.get(i);
       }
     }
     return null; // did not find field
@@ -280,9 +282,9 @@ public class KanbanCard {
    * @return array of fields
    */
   public final String[] getFieldNames() {
-    String[] fieldNames = new String[nFields];
-    for (int i = 0; i < nFields; i++) {
-      fieldNames[i] = fields[i].getName();
+    String[] fieldNames = new String[fields.size()];
+    for (int i = 0; i < fields.size(); i++) {
+      fieldNames[i] = fields.get(i).getName();
     }
     return fieldNames;
   }
@@ -293,9 +295,7 @@ public class KanbanCard {
    * @param f field to add
    */
   public void add(Field f) {
-    if (nFields < MAXFIELDS) {
-      fields[nFields++] = f;
-    }
+    fields.add(f);
   }
 
   /**
@@ -306,9 +306,9 @@ public class KanbanCard {
   public void set(Field newField) {
     var name = newField.getName();
 
-    for (int i = 0; i < nFields; i++) {
-      if (fields[i].getName().equals(name)) {
-        fields[i] = newField;
+    for (int i = 0; i < fields.size(); i++) {
+      if (fields.get(i).getName().equals(name)) {
+        fields.set(i, newField);
         return;
       }
     }
@@ -320,22 +320,29 @@ public class KanbanCard {
   // if present state meets requirement of being before state,
   //    then change to after state and update note
   private void nextStateIfValid(String before, String after, String note) {
-    if (fields[STATE].toString().equals(before)) {
-      fields[STATE] = fields[STATE].newField(after);
+    if (fields.get(STATE).toString().equals(before)) {
+      changeField(STATE, after);
       append(note);
     }
   }
 
   // Append note to notes after a line separator if there is a note.
   private void append(String note) {
-    String notes = fields[NOTES].toString();
+    String notes = fields.get(NOTES).toString();
     if (note != null) {
       if ((notes == null) || notes.equals("")) {
         notes = note;
       } else {
         notes += System.lineSeparator() + note;
       }
-      fields[NOTES] = new StringField("notes", notes);
+      changeField(NOTES, notes);
     }
+  }
+
+  /*
+   * Change a field by making a new one like the old but with new value
+   */
+  private void changeField(int index, Object value) {
+    fields.set(index, fields.get(index).newField(value));
   }
 }
