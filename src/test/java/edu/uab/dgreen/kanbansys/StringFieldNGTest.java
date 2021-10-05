@@ -30,7 +30,9 @@ public class StringFieldNGTest {
 
   /** Test of get method, of class StringField. */
   @Test
-  public void testGet() {}
+  public void testGet() {
+    assertEquals(sf1.get(), "fieldValue1");
+  }
 
   /** Test of toString method, of class StringField. */
   @Test

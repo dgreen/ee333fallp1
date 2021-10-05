@@ -1,29 +1,22 @@
 /*
  * Author: David Green <DGreen@uab.edu>
- * Assignment:  kanbansys - EE333 Summer 2021
+ * Assignment:  kanbansys - EE333 Fall 2021
  *
  * Credits:  (if any for sections of code)
  */
+
 package edu.uab.dgreen.kanbansys;
 
 /**
- * Describe a StringField which is a field that holds a string
+ * Multi-line field
  *
- * @deprecated Use TextField (single line) or MultiLineField.
  */
-@Deprecated
-public class StringField extends Field {
+public class MultiLineField extends Field {
 
-  private final String text; // contents of field
+  private String text; // contents of field
 
-  /**
-   * A Field that holds Strings
-   *
-   * @param name of field
-   * @param text value of field
-   */
-  public StringField(String name, String text) {
-    super(name, "string");
+	public MultiLineField(String name, String text) {
+   super(name, "multiline");
     this.text = (text == null) ? "unknown" : text;
   }
 
@@ -58,17 +51,31 @@ public class StringField extends Field {
    */
   @Override
   public int valueCompareTo(Field f) {
-    return text.compareTo(((StringField) f).text);
+    return text.compareTo(((MultiLineField) f).text);
   }
 
   /**
    * Create a new Field with the same name but new value
    *
-   * @param newValue new value of the StringField
-   * @return the new StringField
+   * @param newValue new value of the MultiLineField
+   * @return the new MultiLineField
    */
   @Override
   public Field newField(Object newValue) {
-    return new StringField(this.getName(), (String) newValue);
+    return new MultiLineField(this.getName(), (String) newValue);
   }
+
+	/**
+	 * Add another line (or more if text has embedded separators.  Add a line separator even
+	 * even if text is empty string but skip if text is null
+	 * @param newText text to be appended to field.
+	 */
+	public Field newFieldAddLine(String newText) {
+		if (text != null) {
+			return new MultiLineField(this.getName(), text + System.lineSeparator() + newText );
+		} else {
+		return this; // no change
+		}
+	}
 }
+
