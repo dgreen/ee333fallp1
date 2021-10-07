@@ -103,7 +103,7 @@ public abstract class Field implements Comparable<Field> {
   /**
    * Compare (as in compareTo) field values given by the fields
    *
-   * @param f the field wbose value is to be compare this object's value
+   * @param f the field whose value is to be compare this object's value
    * @return less than 0 if this lower than f, 0 if equal, greater than 0 this higher than f
    */
   abstract int valueCompareTo(Field f);

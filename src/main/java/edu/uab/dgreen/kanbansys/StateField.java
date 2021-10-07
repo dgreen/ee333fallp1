@@ -6,6 +6,8 @@
  */
 package edu.uab.dgreen.kanbansys;
 
+import java.util.ArrayList;
+
 /**
  * A Field where the value can be one of several string values
  *
@@ -16,7 +18,7 @@ package edu.uab.dgreen.kanbansys;
 public class StateField extends Field {
 
   String state;
-  String[] states;
+  ArrayList<String> states;
 
   /**
    * Create a StateField object
@@ -25,7 +27,7 @@ public class StateField extends Field {
    * @param values the complete list of values
    * @param value the present value of the field
    */
-  public StateField(String name, String[] values, String value) {
+  public StateField(String name, ArrayList<String> values, String value) {
     super(name, "state");
     states = values;
     state = value;
@@ -80,8 +82,8 @@ public class StateField extends Field {
   // provides the index number of the supplied state relative to the list of states,
   // returning -1 if the supplied state is not in the list of states
   private int orderOf(String aState) {
-    for (int i = 0; i < states.length; i++) {
-      if (states[i].equals(aState)) {
+    for (int i = 0; i < states.size(); i++) {
+      if (states.get(i).equals(aState)) {
         return i;
       }
     }

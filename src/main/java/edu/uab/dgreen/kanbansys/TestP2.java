@@ -6,6 +6,7 @@
  */
 package edu.uab.dgreen.kanbansys;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /** Additional Tests for P2 */
@@ -67,7 +68,10 @@ public class TestP2 {
         ----------------------
         """);
 
-    String stateList[] = {"STILL", "RUNNING", "BROKE"};
+    ArrayList<String> stateList = new ArrayList<>();
+    stateList.add("STILL");
+    stateList.add("RUNNING");
+    stateList.add("BROKE");
 
     f5 = new StateField("fieldName5", stateList, "STILL");
     f6 = new StateField("fieldName6", stateList, "RUNNING");
@@ -118,7 +122,7 @@ public class TestP2 {
     System.out.println(kc);
 
     System.out.println("The field names are:");
-    String fieldNames[] = kc.getFieldNames();
+    var fieldNames = kc.getFieldNames();
     for (String fieldName : fieldNames) {
       System.out.println("..." + fieldName);
     }

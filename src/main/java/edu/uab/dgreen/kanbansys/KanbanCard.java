@@ -21,8 +21,6 @@ import java.util.ArrayList;
  *    4 - notes
  *    5 - state
  * </pre>
- *
- * <p>The system is limited to MAXFIELDS (defined in the class).
  */
 public class KanbanCard {
 
@@ -49,7 +47,14 @@ public class KanbanCard {
    */
   public KanbanCard(String name) {
 
-    String[] stateList = {"BACKLOG", "DESIGN", "BUILD", "TEST", "RELEASE", "DONE", "ABANDONED"};
+    ArrayList<String> stateList = new ArrayList<>();
+    stateList.add("BACKLOG");
+    stateList.add("DESIGN");
+    stateList.add("BUILD");
+    stateList.add("TEST");
+    stateList.add("RELEASE");
+    stateList.add("DONE");
+    stateList.add("ABANDONED");
 
     fields = new ArrayList<>();
 
@@ -268,9 +273,9 @@ public class KanbanCard {
    * @return field if found, null otherwise
    */
   public final Field getField(String name) {
-    for (int i = 0; i < fields.size(); i++) {
-      if (fields.get(i).getName().equals(name)) {
-        return fields.get(i);
+    for (var f : fields) {
+      if (f.getName().equals(name)) {
+        return f;
       }
     }
     return null; // did not find field
@@ -281,10 +286,10 @@ public class KanbanCard {
    *
    * @return array of fields
    */
-  public final String[] getFieldNames() {
-    String[] fieldNames = new String[fields.size()];
-    for (int i = 0; i < fields.size(); i++) {
-      fieldNames[i] = fields.get(i).getName();
+  public final ArrayList<String> getFieldNames() {
+    var fieldNames = new ArrayList<String>();
+    for (var f : fields) {
+      fieldNames.add(f.getName());
     }
     return fieldNames;
   }
@@ -301,7 +306,7 @@ public class KanbanCard {
   /**
    * Set field to a new field with a possibly new value
    *
-   * @param field the new field
+   * @param newField the new field
    */
   public void set(Field newField) {
     var name = newField.getName();
