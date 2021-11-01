@@ -6,6 +6,8 @@
  */
 package edu.uab.dgreen.kanbansys;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -14,7 +16,8 @@ import org.testng.annotations.Test;
 /** Test StateField */
 public class StateFieldNGTest {
 
-  String stateList[] = {"STILL", "RUNNING", "BROKE"};
+  ArrayList<String> stateList = new ArrayList<>();
+  String stateListA[] = {"STILL", "RUNNING", "BROKE"};
 
   StateField sf1;
   StateField sf2;
@@ -24,6 +27,7 @@ public class StateFieldNGTest {
 
   @BeforeMethod
   public void setUpMethod() throws Exception {
+    stateList.addAll(Arrays.asList(stateListA));
     sf1 = new StateField("sf1", stateList, "STILL");
     sf2 = new StateField("sf2", stateList, "RUNNING");
     sf3 = new StateField("sf3", stateList, "BROKE");
