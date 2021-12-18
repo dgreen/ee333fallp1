@@ -254,7 +254,7 @@ public class KanbanCard {
   public void move(String state, String note) {
     changeField(STATE, state);
     append(note);
-    if (!fields.get(STATE).toString().equals("BACkLOG")
+    if (!fields.get(STATE).toString().equals("BACKLOG")
         && fields.get(BEGIN).toString().equals("TBD")) {
       changeField(BEGIN, Calendar.getDate());
     }
@@ -321,7 +321,6 @@ public class KanbanCard {
   }
 
   // Helper methods:
-
   // if present state meets requirement of being before state,
   //    then change to after state and update note
   private void nextStateIfValid(String before, String after, String note) {
